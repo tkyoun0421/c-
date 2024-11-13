@@ -3,8 +3,8 @@
 #include <climits>
 
 IntegerStorage::IntegerStorage(int max) {
-    maxCount = max;
-    currentCount = 0;
+    maxCount = max; 
+    currentCount = 0;  
     arr = new int[maxCount];
 }
 
@@ -14,38 +14,40 @@ IntegerStorage::~IntegerStorage() {
 
 void IntegerStorage::add(int value) {
     if (currentCount == maxCount) {
-        std::cout << "ì €ìž¥ ê³µê°„ì´ ê°€ë“ ì°¼ìŠµë‹ˆë‹¤. ì €ìž¥í•  ìˆ˜ ì—†ìŠµë‹ˆë‹¤." << std::endl;
+        std::cout << "ÀúÀå °ø°£ÀÌ °¡µæ Ã¡½À´Ï´Ù. ÀúÀåÇÒ ¼ö ¾ø½À´Ï´Ù." << std::endl;
         return;
     }
     arr[currentCount++] = value;
+    resizeStorage();  
 }
 
 void IntegerStorage::popOldest() {
     if (currentCount == 0) {
-        std::cout << "ì €ìž¥ëœ ìˆ«ìžê°€ ì—†ìŠµë‹ˆë‹¤." << std::endl;
+        std::cout << "ÀúÀåµÈ ¼ýÀÚ°¡ ¾ø½À´Ï´Ù." << std::endl;
         return;
     }
-    std::cout << "ê°€ìž¥ ì˜¤ëž˜ì „ì— ì €ìž¥ëœ ìˆ«ìž: " << arr[0] << std::endl;
+    std::cout << "°¡Àå ¿À·¡Àü¿¡ ÀúÀåµÈ ¼ýÀÚ: " << arr[0] << std::endl;
 
-    // ë°°ì—´ì„ ì™¼ìª½ìœ¼ë¡œ ì´ë™
     for (int i = 0; i < currentCount - 1; ++i) {
         arr[i] = arr[i + 1];
     }
     --currentCount;
+    resizeStorage(); 
 }
 
 void IntegerStorage::popLatest() {
     if (currentCount == 0) {
-        std::cout << "ì €ìž¥ëœ ìˆ«ìžê°€ ì—†ìŠµë‹ˆë‹¤." << std::endl;
+        std::cout << "ÀúÀåµÈ ¼ýÀÚ°¡ ¾ø½À´Ï´Ù." << std::endl;
         return;
     }
-    std::cout << "ê°€ìž¥ ìµœê·¼ì— ì €ìž¥ëœ ìˆ«ìž: " << arr[currentCount - 1] << std::endl;
+    std::cout << "°¡Àå ÃÖ±Ù¿¡ ÀúÀåµÈ ¼ýÀÚ: " << arr[currentCount - 1] << std::endl;
     --currentCount;
+    resizeStorage();  
 }
 
 void IntegerStorage::popMax() {
     if (currentCount == 0) {
-        std::cout << "ì €ìž¥ëœ ìˆ«ìžê°€ ì—†ìŠµë‹ˆë‹¤." << std::endl;
+        std::cout << "ÀúÀåµÈ ¼ýÀÚ°¡ ¾ø½À´Ï´Ù." << std::endl;
         return;
     }
 
@@ -58,18 +60,18 @@ void IntegerStorage::popMax() {
         }
     }
 
-    std::cout << "ê°€ìž¥ í° ìˆ«ìž: " << arr[maxIndex] << std::endl;
+    std::cout << "°¡Àå Å« ¼ýÀÚ: " << arr[maxIndex] << std::endl;
 
-    // ì‚­ì œ í›„ ë°°ì—´ì„ ì™¼ìª½ìœ¼ë¡œ ì´ë™
     for (int i = maxIndex; i < currentCount - 1; ++i) {
         arr[i] = arr[i + 1];
     }
     --currentCount;
+    resizeStorage();  
 }
 
 void IntegerStorage::popMin() {
     if (currentCount == 0) {
-        std::cout << "ì €ìž¥ëœ ìˆ«ìžê°€ ì—†ìŠµë‹ˆë‹¤." << std::endl;
+        std::cout << "ÀúÀåµÈ ¼ýÀÚ°¡ ¾ø½À´Ï´Ù." << std::endl;
         return;
     }
 
@@ -82,18 +84,18 @@ void IntegerStorage::popMin() {
         }
     }
 
-    std::cout << "ê°€ìž¥ ìž‘ì€ ìˆ«ìž: " << arr[minIndex] << std::endl;
+    std::cout << "°¡Àå ÀÛÀº ¼ýÀÚ: " << arr[minIndex] << std::endl;
 
-    // ì‚­ì œ í›„ ë°°ì—´ì„ ì™¼ìª½ìœ¼ë¡œ ì´ë™
     for (int i = minIndex; i < currentCount - 1; ++i) {
         arr[i] = arr[i + 1];
     }
     --currentCount;
+    resizeStorage(); 
 }
 
 void IntegerStorage::printAverage() {
     if (currentCount == 0) {
-        std::cout << "ì €ìž¥ëœ ìˆ«ìžê°€ ì—†ìŠµë‹ˆë‹¤." << std::endl;
+        std::cout << "ÀúÀåµÈ ¼ýÀÚ°¡ ¾ø½À´Ï´Ù." << std::endl;
         return;
     }
 
@@ -101,30 +103,50 @@ void IntegerStorage::printAverage() {
     for (int i = 0; i < currentCount; ++i) {
         sum += arr[i];
     }
-    std::cout << "ì €ìž¥ëœ ìˆ«ìžì˜ í‰ê· : " << static_cast<double>(sum) / currentCount << std::endl;
+    std::cout << "ÀúÀåµÈ ¼ýÀÚÀÇ Æò±Õ: " << static_cast<double>(sum) / currentCount << std::endl;
 }
 
-void IntegerStorage::changeMaxCount() {
-    int newMax;
-    std::cout << "ìƒˆë¡œìš´ ìµœëŒ€ ê°œìˆ˜ë¥¼ ìž…ë ¥í•˜ì„¸ìš”: ";
-    std::cin >> newMax;
-
-    if (newMax < currentCount) {
-        std::cout << "í˜„ìž¬ ì €ìž¥ëœ ìˆ«ìžì˜ ê°œìˆ˜ë³´ë‹¤ ìž‘ì€ ê°’ìœ¼ë¡œ ë³€ê²½í•  ìˆ˜ ì—†ìŠµë‹ˆë‹¤." << std::endl;
+void IntegerStorage::changeMaxCount(int newMaxCount) {
+    if (newMaxCount < currentCount) {
+        std::cout << "»õ·Î¿î ÃÖ´ë Å©±â´Â ÇöÀç ÀúÀåµÈ ¼ýÀÚ °³¼öº¸´Ù ÀÛÀ» ¼ö ¾ø½À´Ï´Ù." << std::endl;
         return;
     }
 
+    maxCount = newMaxCount;
+
+    resizeStorage();  
+}
+
+
+void IntegerStorage::resizeStorage() {
+    int newMax;
+
+    if (currentCount <= maxCount / 4) {
+        newMax = std::max(maxCount / 2, currentCount);  
+    } else if (currentCount == maxCount) {
+        newMax = maxCount * 2;  
+    } else {
+        return; 
+    }
+
+    int* newArr = new int[newMax];
+    for (int i = 0; i < currentCount; ++i) {
+        newArr[i] = arr[i];
+    }
+    delete[] arr;
+    arr = newArr;
     maxCount = newMax;
-    std::cout << "ìµœëŒ€ ê°œìˆ˜ê°€ " << maxCount << "ìœ¼ë¡œ ë³€ê²½ë˜ì—ˆìŠµë‹ˆë‹¤." << std::endl;
+
+    std::cout << "ÀúÀå °ø°£ÀÇ Å©±â°¡ " << maxCount << "À¸·Î º¯°æµÇ¾ú½À´Ï´Ù." << std::endl;
 }
 
 void IntegerStorage::printStoredNumbers() {
     if (currentCount == 0) {
-        std::cout << "ì €ìž¥ëœ ìˆ«ìžê°€ ì—†ìŠµë‹ˆë‹¤." << std::endl;
+        std::cout << "ÀúÀåµÈ ¼ýÀÚ°¡ ¾ø½À´Ï´Ù." << std::endl;
         return;
     }
 
-    std::cout << "ì €ìž¥ëœ ìˆ«ìžë“¤: [";
+    std::cout << "ÀúÀåµÈ ¼ýÀÚµé: [";
     for (int i = 0; i < currentCount; ++i) {
         std::cout << arr[i];
         if (i < currentCount - 1) {
@@ -137,8 +159,7 @@ void IntegerStorage::printStoredNumbers() {
 int main() {
     int max;
 
-    // ìœ ì €ì—ê²Œ ìµœëŒ€ ì €ìž¥í•  ì •ìˆ˜ì˜ ê°œìˆ˜ ìž…ë ¥ë°›ê¸°
-    std::cout << "ì €ìž¥í•  ìˆ˜ ìžˆëŠ” ì •ìˆ˜ì˜ ìµœëŒ€ ê°œìˆ˜ë¥¼ ìž…ë ¥í•˜ì„¸ìš”: ";
+    std::cout << "ÀúÀåÇÒ ¼ö ÀÖ´Â Á¤¼öÀÇ ÃÖ´ë °³¼ö¸¦ ÀÔ·ÂÇÏ¼¼¿ä: ";
     std::cin >> max;
 
     IntegerStorage storage(max);
@@ -148,21 +169,21 @@ int main() {
     while (true) {
         storage.printStoredNumbers();
 
-        std::cout << "\nì˜µì…˜ì„ ì„ íƒí•˜ì„¸ìš”: \n";
-        std::cout << "1. ì •ìˆ˜ ì €ìž¥\n";
-        std::cout << "2. ê°€ìž¥ ì˜¤ëž˜ì „ì— ì €ìž¥í•œ ì •ìˆ˜ ì¸ì¶œ\n";
-        std::cout << "3. ê°€ìž¥ ìµœê·¼ ì €ìž¥í•œ ì •ìˆ˜ ì¸ì¶œ\n";
-        std::cout << "4. ê°€ìž¥ í° ì •ìˆ˜ ì¸ì¶œ\n";
-        std::cout << "5. ê°€ìž¥ ìž‘ì€ ì •ìˆ˜ ì¸ì¶œ\n";
-        std::cout << "6. í‰ê·  ê³„ì‚°\n";
-        std::cout << "7. ìµœëŒ€ ê°œìˆ˜ ë³€ê²½\n";
-        std::cout << "0. ì¢…ë£Œ\n";
-        std::cout << "ì„ íƒ: ";
+        std::cout << "\n¿É¼ÇÀ» ¼±ÅÃÇÏ¼¼¿ä: \n";
+        std::cout << "1. Á¤¼ö ÀúÀå\n";
+        std::cout << "2. °¡Àå ¿À·¡Àü¿¡ ÀúÀåÇÑ Á¤¼ö ÀÎÃâ\n";
+        std::cout << "3. °¡Àå ÃÖ±Ù ÀúÀåÇÑ Á¤¼ö ÀÎÃâ\n";
+        std::cout << "4. °¡Àå Å« Á¤¼ö ÀÎÃâ\n";
+        std::cout << "5. °¡Àå ÀÛÀº Á¤¼ö ÀÎÃâ\n";
+        std::cout << "6. Æò±Õ °è»ê\n";
+        std::cout << "7. ÃÖ´ë ÀúÀåÇÒ ¼ö ÀÖ´Â Á¤¼ö °³¼ö ¼öÁ¤\n";
+        std::cout << "0. Á¾·á\n";
+        std::cout << "¼±ÅÃ: ";
         std::cin >> choice;
 
         switch (choice) {
             case 1:
-                std::cout << "ì €ìž¥í•  ì •ìˆ˜ë¥¼ ìž…ë ¥í•˜ì„¸ìš”: ";
+                std::cout << "ÀúÀåÇÒ Á¤¼ö¸¦ ÀÔ·ÂÇÏ¼¼¿ä: ";
                 std::cin >> value;
                 storage.add(value);
                 break;
@@ -182,13 +203,15 @@ int main() {
                 storage.printAverage();
                 break;
             case 7:
-                storage.changeMaxCount();
+                std::cout << "»õ·Î¿î ÃÖ´ë ÀúÀå °³¼ö¸¦ ÀÔ·ÂÇÏ¼¼¿ä: ";
+                std::cin >> value;
+                storage.changeMaxCount(value);  
                 break;
             case 0:
-                std::cout << "í”„ë¡œê·¸ëž¨ì„ ì¢…ë£Œí•©ë‹ˆë‹¤." << std::endl;
+                std::cout << "ÇÁ·Î±×·¥À» Á¾·áÇÕ´Ï´Ù." << std::endl;
                 return 0;
             default:
-                std::cout << "ìž˜ëª»ëœ ìž…ë ¥ìž…ë‹ˆë‹¤." << std::endl;
+                std::cout << "Àß¸øµÈ ÀÔ·ÂÀÔ´Ï´Ù." << std::endl;
         }
     }
 
